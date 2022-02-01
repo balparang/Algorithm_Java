@@ -1,28 +1,29 @@
 import java.util.*;
 
 public class Main {
-    public boolean isPrime(int num) {
-        if (num == 1) return false;
-        for (int i = 2; i < num; i++) { // 1과 자기 자신을 제외한( i <- 2 to num - 1
-            if (num % i == 0) return false; //  약수가 존재하면 소수 아님
-        }
-        return true;
-    }
+    public int solution(int n, int[][] arr) {
+        int answer = Integer.MIN_VALUE;
+        int sumColumn, sumRow; // 행의 합, 열의 합
+        int diag1 = 0, diag2 = 0;
 
-    public ArrayList<Integer> solution(int n, int[] arr) {
-        ArrayList<Integer> answer = new ArrayList<>();
-
+        // 행, 열의 합
         for (int i = 0; i < n; i++) {
-            int tmp = arr[i];
-            int result = 0; // 뒤집힌 숫자
-
-            while(tmp > 0) {
-                int remainder = tmp % 10; // 나머지
-                result = result * 10 + remainder;
-                tmp = tmp / 10; // 몫, 123 -> 12
+            sumColumn = sumRow = 0;
+            for (int j = 0; j < n; j++) {
+                sumColumn += arr[i][j];
+                sumRow += arr[j][i];
             }
-            if(isPrime(result)) answer.add(result);
+            answer = Math.max(answer, sumColumn);
+            answer = Math.max(answer, sumRow);
         }
+
+        // diagonal
+        for (int i = 0; i < n; i++) {
+            diag1 += arr[i][i];
+            diag2 += arr[i][n - i - 1];
+        }
+        answer = Math.max(answer, diag1);
+        answer = Math.max(answer, diag2);
 
         return answer;
     }
@@ -32,13 +33,13 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
-        int[] arr = new int[n];
+        int[][] arr = new int[n][n];
         for (int i = 0; i < n; i++) {
-            arr[i] = sc.nextInt();
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = sc.nextInt();
+            }
         }
 
-        for (int x : T.solution(n, arr)) {
-            System.out.print(x + " ");
-        }
+        System.out.println(T.solution(n, arr));
     }
 }
