@@ -1,12 +1,15 @@
-import java.util.Arrays;
-
-public class Test {
-    public static void main(String[] args) {
-        String testStr = "10001";
-        int arr = Integer.parseInt(Integer.toBinaryString(100));
-        int testIntVar = Integer.parseInt(Integer.toBinaryString(100));
-
-        System.out.println(arr);
-        System.out.println(testIntVar);
-    }
-}
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//import java.util.StringTokenizer;
+//
+//public class Test {
+//    static int n, m;
+//
+//    public static void main(String[] args) throws IOException {
+//        int i = 3;
+//        int[] arr = new int[3];
+////        System.out.printf(String.valueOf(n), m, i, arr[0]);
+//        System.out.println(arr[0]);
+//    }
+//}

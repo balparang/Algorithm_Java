@@ -1,45 +1,41 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
-    public int solution(int n, int[][] arr) {
-        int answer = Integer.MIN_VALUE;
-        int sumColumn, sumRow; // 행의 합, 열의 합
-        int diag1 = 0, diag2 = 0;
+    public int solution(int n, int m, int[][] arr) {
+        int answer = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                int count = 0;
 
-        // 행, 열의 합
-        for (int i = 0; i < n; i++) {
-            sumColumn = sumRow = 0;
-            for (int j = 0; j < n; j++) {
-                sumColumn += arr[i][j];
-                sumRow += arr[j][i];
+                for (int k = 0; k < m; k++) {
+                    int posI = 0, posJ = 0;
+
+                    for (int s = 0; s < n; s++) {
+                        if (arr[k][s] == i) posI = s;
+                        if (arr[k][s] == j) posJ = s;
+                    }
+                    if (posI < posJ) count++;
+                }
+
+                if(count == m) answer++;
             }
-            answer = Math.max(answer, sumColumn);
-            answer = Math.max(answer, sumRow);
         }
-
-        // diagonal
-        for (int i = 0; i < n; i++) {
-            diag1 += arr[i][i];
-            diag2 += arr[i][n - i - 1];
-        }
-        answer = Math.max(answer, diag1);
-        answer = Math.max(answer, diag2);
 
         return answer;
     }
 
     public static void main(String[] args) {
         Main T = new Main();
-        Scanner sc = new Scanner(System.in);
-
-        int n = sc.nextInt();
-        int[][] arr = new int[n][n];
-        for (int i = 0; i < n; i++) {
+        Scanner kb = new Scanner(System.in);
+        int n = kb.nextInt();
+        int m = kb.nextInt();
+        int[][] arr = new int[m][n];
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                arr[i][j] = sc.nextInt();
+                arr[i][j] = kb.nextInt();
             }
         }
 
-        System.out.println(T.solution(n, arr));
+        System.out.println(T.solution(n, m, arr));
     }
 }
