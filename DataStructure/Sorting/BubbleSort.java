@@ -1,4 +1,4 @@
-package lec_DataStructure.Sorting;
+package DataStructure.Sorting;
 
 public class BubbleSort {
     private static void bubbleSort(int[] arr) {
