@@ -1,4 +1,4 @@
-package DataStructure.Sorting;
+package Algorithm.Sorting;
 
 public class BubbleSort {
     private static void bubbleSort(int[] arr) {
