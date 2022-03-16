@@ -1,21 +1,18 @@
-/*
-참고 : https://www.youtube.com/watch?v=YbsQiiubO74&ab_channel=%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4%EB%8C%80%ED%95%9C%EB%AF%BC%EA%B5%AD
- */
 package Algorithm.Sorting;
 
-public class BubbleSort {
+public class BubbleSort_Self {
     private static void bubbleSort(int[] arr) {
         bubbleSort(arr, arr.length - 1);
     }
 
-    private static void bubbleSort(int[] arr, int last) {
-        if (last > 0) {
-            for (int i = 1; i <= last; i++) {
-                if (arr[i - 1] > arr[i]) {
-                    swap(arr, i - 1, i);
+    private static void bubbleSort(int[] arr, int end) {
+        if (end > 0) {
+            for (int i = 0; i < end; i++) {
+                if (arr[i] > arr[i + 1]) { // 뒤에 것이 더 작으면 앞으로 보냄
+                    swap(arr, i, i + 1);
                 }
             }
-            bubbleSort(arr, last - 1);
+            bubbleSort(arr, end - 1);
         }
     }
 
@@ -31,7 +28,6 @@ public class BubbleSort {
         }
         System.out.println();
     }
-
     public static void main(String[] args) {
         int[] arr = {3, 5, 4, 2, 1};
         printArray(arr);
