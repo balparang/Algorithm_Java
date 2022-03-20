@@ -3,7 +3,7 @@
  */
 package Algorithm.Sorting;
 
-public class SelectionSort {
+public class SelectionSort_Recursion {
     private static void selectionSort(int[] arr) {
         selectionSort(arr, 0);
     }
