@@ -6,14 +6,12 @@ public class Main {
 
         // 입력
         int a = sc.nextInt();
-        int b = sc.nextInt();
-        int c = sc.nextInt();
 
-        // 크기 비교
-        if (b > a && b < c) {
-            System.out.println(1);
+        // 출력
+        if (a < 10 || a > 20) {
+            System.out.println("yes");
         } else {
-            System.out.println(0);
+            System.out.println("no");
         }
     }
 }
