@@ -7,15 +7,14 @@ public class Main {
         int n = sc.nextInt();
 
         for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
 
-            if (i % 2 == 0) {
-                for (int j = 0; j < n; j++) {
-                    System.out.print((n * i + 1) + j + " ");
+                if (i <= j) {
+                    System.out.print(n - j + " ");
+                } else { // i > j
+                    System.out.print("  ");
                 }
-            } else {
-                for (int j = 0; j < n; j++) {
-                    System.out.print(n * (i + 1) - j + " ");
-                }
+
             }
 
             System.out.println();
@@ -23,7 +22,7 @@ public class Main {
     }
 }
 
-// 해설
+// 선생님 답안
 import java.util.Scanner;
 
 public class Main {
@@ -33,15 +32,17 @@ public class Main {
         // 변수 선언 및 입력
         int n = sc.nextInt();
 
-        // 좌우 지그재그로 출력합니다.
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i % 2 == 0)
-                    System.out.print(((i * n) + j + 1) + " ");
+
+        // 숫자로 이루어진 삼각형을 출력합니다.
+        for (int i = n; i >= 1; i--) {
+            for (int j = n; j >= 1; j--) {
+                if (j > i)
+                    System.out.print("  ");
                 else
-                    System.out.print(((i * n) + n - j) + " ");
+                    System.out.print(j + " ");
             }
             System.out.println();
         }
     }
 }
+

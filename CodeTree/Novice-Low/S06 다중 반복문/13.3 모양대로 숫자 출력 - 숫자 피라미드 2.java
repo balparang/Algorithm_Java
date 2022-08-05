@@ -6,14 +6,16 @@ public class Main {
 
         int n = sc.nextInt();
 
-        // 길이가 n 인 정사각형
-        for (int i = 0; i < n; i++) {
+        int cnt = 1;
 
-            for (int j = 0; j < n; j++) {
-                System.out.print(i + 1);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j <= i; j++) {
+                System.out.print(cnt + " ");
+                cnt++;
             }
 
             System.out.println();
         }
+
     }
 }
