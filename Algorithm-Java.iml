@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/CodeTree" />
       <excludeFolder url="file://$MODULE_DIR$/inflearn_Java_PS" />
+      <excludeFolder url="file://$MODULE_DIR$/Programmers" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
