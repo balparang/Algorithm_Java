@@ -228,3 +228,93 @@ public class Main {
         System.out.print(moveNum);
     }
 }
+
+// Try 2
+import java.util.Scanner;
+
+public class Main {
+    static int board[][];
+    static int dx[] = new int[]{0, 1, 0, -1};
+    static int dy[] = new int[]{1, 0, -1, 0};
+    static int moveDir;
+
+    static int cx, cy;
+    static int n;
+
+    // initialization
+    static void initialize(int num) {
+        if (num <= n) {
+            cx = 0;
+            cy = num - 1;
+            moveDir = 1;
+        } else if (num <= 2 * n) {
+            cx = num - n - 1;
+            cy = n - 1;
+            moveDir = 2;
+        } else if (num <= 3 * n) {
+            cx = n - 1;
+            cy = n - (num - 2 * n);
+            moveDir = 3;
+        } else {
+            cx = n - (num - 3 * n);
+            cy = 0;
+            moveDir = 0;
+        }
+    }
+
+    // inRange
+    static boolean inRange(int x, int y) {
+        return (x >= 0 && x < n) && (y >= 0 && y < n);
+    }
+
+    // move
+    static void move(int nextDir) {
+        cx += dx[nextDir];
+        cy += dy[nextDir];
+        moveDir = nextDir;
+    }
+
+    // simulate
+    static int simulate() {
+        int cnt = 0;
+
+        while (inRange(cx, cy)) {
+            if (board[cx][cy] == '/') {
+                move(3 - moveDir);
+            } else {
+                move(moveDir ^ 1);
+            }
+            cnt++;
+        }
+
+        return cnt;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // 입력
+        n = sc.nextInt();
+        board = new int[n][n];
+
+        // 배열 입력
+        for (int i = 0; i < n; i++) {
+            String str = sc.next();
+
+            for (int j = 0; j < n; j++) {
+                board[i][j] = str.charAt(j);
+            }
+        }
+
+        int startNum = sc.nextInt();
+
+        // 초기화
+        initialize(startNum);
+
+        // 시뮬레이션
+        int answer = simulate();
+
+        // 출력
+        System.out.println(answer);
+    }
+}
