@@ -27,7 +27,7 @@ public class Main {
         }
 
         // 선분을 하나 선택하여 해당 선분에 겹침이 발생하는지 확인
-        int cnt = 0; // 겹침이 없는 선분으 개수
+        int cnt = 0; // 겹침이 없는 선분의 개수
 
         for (int i = 0; i < n; i++) {
             boolean isOverlapped = false;
