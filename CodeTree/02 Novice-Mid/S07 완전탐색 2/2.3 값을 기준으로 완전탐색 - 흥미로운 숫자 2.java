@@ -94,3 +94,44 @@ public class Main {
         System.out.print(ans);
     }
 }
+
+// 다른 사람의 풀이 - 숫자가 나온 횟수 기록
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static int X, Y;
+    static int[] countArr;
+
+    public static void main(String[] args) throws Exception {
+        countArr = new int[10];
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        X = Integer.parseInt(st.nextToken());
+        Y = Integer.parseInt(st.nextToken());
+        int answer = 0;
+
+        for (int num = X; num <= Y; num++) {
+            Arrays.fill(countArr, 0);
+            boolean isInteresting = false;
+            char[] chars = String.valueOf(num).toCharArray();
+            for (char c : chars) {
+                countArr[c - '0']++;
+            }
+
+            for (int count : countArr) {
+                if (count == chars.length - 1) {
+                    isInteresting = true;
+                    break;
+                }
+            }
+
+            if (isInteresting) answer++;
+        }
+
+        System.out.println(answer);
+    }
+}
