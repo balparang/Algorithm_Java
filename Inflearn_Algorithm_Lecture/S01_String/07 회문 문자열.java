@@ -57,3 +57,39 @@ public class Main {
         System.out.println(sol.solution(word));
     }
 }
+
+/**
+ * 23.03.20 - lt, rt 기법 이용
+ */
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        main.Main T = new main.Main();
+
+        // 입력
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine().toLowerCase();
+
+        // 출력
+        System.out.println(T.solution(str));
+    }
+
+    public String solution(String str) {
+
+        int lt = 0, rt = str.length() - 1;
+
+        while (lt < rt) {
+
+            // 회문이 아닌 경우
+            if (str.charAt(lt) != str.charAt(rt)) {
+                return "NO";
+            }
+
+            lt++;
+            rt--;
+        }
+
+        return "YES";
+    }
+}
