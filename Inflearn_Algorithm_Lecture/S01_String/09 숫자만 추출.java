@@ -74,3 +74,37 @@ public class Main {
         System.out.println(sol.solution(sentence));
     }
 }
+
+/**
+ * 23.03.20
+ */
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        main.Main T = new main.Main();
+
+        // 입력
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine();
+
+        // 출력
+        System.out.println(T.solution(str));
+    }
+
+    public int solution(String str) {
+
+        StringBuilder strNum = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+
+            char currentChar = str.charAt(i);
+
+            if (Character.isDigit(currentChar)) {
+                strNum.append(currentChar);
+            }
+        }
+
+        return Integer.parseInt(strNum.toString());
+    }
+}
