@@ -26,3 +26,37 @@ public class Main {
         System.out.println(sol.solution(sentence));
     }
 }
+
+/**
+ * 해설
+ */
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        main.Main T = new main.Main();
+
+        // 입력
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine();
+
+        // 출력
+        System.out.println(T.solution(str));
+    }
+
+    public String solution(String str) {
+
+		 /*
+		 	모든 문자를 대문자로 만들고,
+		 	대문자가 아닌 문자를 정규식을 이용하여 제거
+		 */
+        str = str.toUpperCase().replaceAll("[^A-Z]", "");
+
+        String reversed = new StringBuilder(str).reverse().toString();
+        if (reversed.equals(str)) {
+            return "YES";
+        }
+
+        return "NO";
+    }
+}
