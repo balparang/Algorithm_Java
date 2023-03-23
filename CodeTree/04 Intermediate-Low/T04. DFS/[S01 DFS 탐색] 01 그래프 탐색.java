@@ -201,3 +201,66 @@ public class Main {
 		System.out.println(vertexCnt);
 	}
 }
+
+/**
+ * 23.03.23 연습
+ */
+
+public class Main {
+
+	static final int MAX_N = 1000;
+
+	static ArrayList<Integer>[] graph = new ArrayList[MAX_N + 1]; // 배열 생성
+
+	static int N, M;
+	static int vertexCnt = 0;
+	static boolean[] visited = new boolean[MAX_N + 1];
+
+	public static void main(String[] args) {
+
+		// graph 초기화
+		for (int i = 1; i < graph.length; i++) {
+			graph[i] = new ArrayList<>();
+		}
+
+		// 입력
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt(); // vertices_num
+		M = sc.nextInt(); // edges_num
+
+		// 그래프 정보 생성
+		while (M-- > 0) {
+
+			int v1 = sc.nextInt();
+			int v2 = sc.nextInt();
+
+			// 양방향 그래프 매핑
+			graph[v1].add(v2); // NPE 발생
+			graph[v2].add(v1);
+		}
+
+		// 루트 노드 방문 처리
+		int rootVertex = 1;
+		visited[rootVertex] = true;
+		DFS(rootVertex);
+
+		// 출력
+		System.out.println(vertexCnt++);
+	}
+
+	public static void DFS(int vertex) {
+
+		for (int i = 0; i < graph[vertex].size(); i++) {
+
+			int currV = graph[vertex].get(i);
+
+			if (!visited[currV]) {
+
+				visited[currV] = true;
+				vertexCnt++; // 정답 카운팅++
+
+				DFS(currV);
+			}
+		}
+	}
+}
