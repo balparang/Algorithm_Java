@@ -299,3 +299,97 @@ public class Main {
 		System.out.print(maxGold);
 	}
 }
+
+/**
+ * 23.04.12
+ */
+
+import java.util.Scanner;
+
+public class Main {
+
+	/*
+	 	- 채굴 1번만 마름모 모양으로 가능
+	 		- 마름모 모양: 중심점 기준으로 K번 이동가능 위치
+	 		- 격자를 벗어난 모양도 가능
+	 		- k = 2(n-1) 일 때 모든 격자 커버 가능
+		- 금 1개 가격이 m일 때, 손해보지 않으면서 캘 수 있는 최대 금 개수?
+			- 채굴 비용 = k^2 + (k+1)^2
+		- 모든 중심점에 대해
+			- k <- 0 to 2n - 1
+				- k에 대하여 gold 추출
+				- 손해 안 봤으면 gold 개수 갱신
+	 */
+
+	public static int MAX_N = 20;
+
+	static int[][] grid = new int[MAX_N][MAX_N];
+	static int n, m;
+
+	static int calcMineCost(int k) {
+		return (k * k) + (k + 1) * (k + 1);
+	}
+
+	static int calcDist(int x1, int y1, int x2, int y2) {
+		return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+	}
+
+	static int mine(int row, int col, int k) {
+		// (row, col) : 중심점
+		int goldCnt = 0;
+
+		// 모든 격자에 대해
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				// 중심점으로부터 거리가 k이내일 때, 금 채굴
+				if (calcDist(i, j, row, col) <= k) {
+					goldCnt += grid[i][j];
+				}
+			}
+		}
+
+		return goldCnt;
+	}
+
+	static int simulate() {
+		int maxGoldCnt = 0;
+
+		// 모든 중심점에 대하여
+		for (int row = 0; row < n; row++) {
+			for (int col = 0; col < n; col++) {
+
+				// 마름모 모양으로 채굴 시도
+				for (int k = 0; k <= 2 * n - 1; k++) {
+					int goldCnt = mine(row, col, k);
+
+					// 전체 금 가격 >= 채굴비용 && 기존 금 개수 보다 많으면 갱신
+					if (goldCnt * m >= calcMineCost(k) && goldCnt > maxGoldCnt) {
+						maxGoldCnt = goldCnt;
+					}
+				}
+			}
+		}
+
+		return maxGoldCnt;
+	}
+
+	public static void main(String[] args) {
+		// 입력
+		Scanner sc = new Scanner(System.in);
+		n = sc.nextInt(); // n by n grid
+		m = sc.nextInt(); // 금 1개의 가격
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				grid[i][j] = sc.nextInt();
+			}
+		}
+
+		// 최대 금 개수 구하기
+		int maxGoldCnt = simulate();
+
+		// 출력
+		System.out.println(maxGoldCnt);
+	}
+}
