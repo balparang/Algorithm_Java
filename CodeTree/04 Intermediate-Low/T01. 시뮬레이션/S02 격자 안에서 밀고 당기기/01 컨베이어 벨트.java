@@ -113,3 +113,82 @@ public class Main {
 		System.out.println();
 	}
 }
+
+/**
+ * 23.04.22 - 배열 2개를 이용한 풀이
+ */
+
+import java.util.Scanner;
+
+public class Main {
+
+	/*
+		up, down 배열로 구성
+		1. up의 마지막 원소 를 temp 에 저장
+		2. up 원소 한 칸씩 뒤로 밀기
+		3. down 마지막 원소를 up의 첫 번째에 삽입
+		4. down 원소 한 칸씩 뒤로 밀기
+		5. down 첫 번째 원소에 temp 삽입
+	 */
+
+	static final int MAX_N = 200;
+	static int n, t; // n: 숫자 개수, t: t초 후의 시간
+
+	// ⭐️ MAX_N이 아니라 MAX_N + 1로 설정해주어야한다!!!
+	// - 원소 한 칸씩 뒤로 밀 때 OutOfIndex 위험
+	static int[] up = new int[MAX_N + 1];
+	static int[] down = new int[MAX_N + 1];
+
+	static void simulate() {
+		// t초 동안 시뮬레이션 진행
+		for (int i = 0; i < t; i++) {
+			int lastIdx = n - 1;
+
+			// 1. up의 마지막 원소를 temp 에 저장
+			int temp = up[lastIdx];
+
+			// 2. up 원소 한 칸씩 뒤로 밀기
+			for (int j = lastIdx; j >= 1; j--) {
+				up[j] = up[j - 1];
+			}
+
+			// 3. down 마지막 원소를 up의 첫 번째에 삽입
+			up[0] = down[lastIdx];
+
+			// 4. down 원소 한 칸씩 뒤로 밀기
+			for (int j = lastIdx; j >= 1; j--) {
+				down[j] = down[j - 1];
+			}
+
+			// 5. down 첫 번째 원소에 temp 삽입
+			down[0] = temp;
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		// 입력
+		n = sc.nextInt();
+		t = sc.nextInt();
+
+		for (int i = 0; i < n; i++) {
+			up[i] = sc.nextInt();
+		}
+		for (int i = 0; i < n; i++) {
+			down[i] = sc.nextInt();
+		}
+
+		// 시뮬
+		simulate();
+
+		// 출력
+		for (int i = 0; i <= n - 1; i++) {
+			System.out.print(up[i] + " ");
+		}
+		System.out.println();
+		for (int i = 0; i <= n - 1; i++) {
+			System.out.print(down[i] + " ");
+		}
+	}
+}
