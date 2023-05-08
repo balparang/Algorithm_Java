@@ -393,3 +393,101 @@ public class Main {
 		System.out.println(maxGoldCnt);
 	}
 }
+
+/*
+	23.05.09: 해설 3과 같은 풀이
+ */
+
+import java.util.Scanner;
+
+public class Main {
+
+	/*
+		모든 중심점 (row, col)을 기준으로 채굴 시도
+		(row, col) 에 대해 k가 0부터 2n-2 까지 증가하며 마름모 모양으로 채굴
+		순이익이 날 때, 최대 금 개수 업데이트
+	 */
+
+	static final int MAX_N = 20;
+	static final int DIR_NUM = 4;
+
+	static int[][] grid = new int[MAX_N][MAX_N];
+	static int n; // n by n grid
+	static int m; // 금 1개의 가격
+
+	static int[] dx = {1, 1, -1, -1};
+	static int[] dy = {-1, 1, 1, -1};
+
+	static int maxGoldCnt;
+
+	static boolean inRange(int x, int y) {
+		return x >= 0 && x < n && y >= 0 && y < n;
+	}
+
+	// k에 대해, 모서리만 계산
+	static int mine(int k, int row, int col) {
+
+		int goldCnt = 0;
+
+		if (k == 0)
+			return grid[row][col];
+
+		int cx = row - k, cy = col;
+
+		// 모서리 순회하면서 채굴
+		for (int dir = 0; dir < DIR_NUM; dir++) {
+			for (int step = 1; step <= k; step++) {
+				cx += dx[dir];
+				cy += dy[dir];
+
+				if (inRange(cx, cy)) {
+					goldCnt += grid[cx][cy];
+				}
+			}
+		}
+		return goldCnt;
+	}
+
+	static int cost(int k) {
+		return (k * k) + (k + 1) * (k + 1);
+	}
+
+	static void simulate() {
+		// 모든 row, col 에 대해 완전탐색
+		for (int row = 0; row < n; row++) {
+			for (int col = 0; col < n; col++) {
+
+				// 마름모 모양으로 채굴
+				// row, col에 대해 k 늘려가며 마름모 모양으로 채굴
+				int goldCnt = 0;
+				for (int k = 0; k <= 2 * n - 2; k++) {
+
+					goldCnt += mine(k, row, col); // 모서리만 계산
+
+					// k 마름모에 대해 채굴 해서, 순이익이 날 때, 최대 금 개수 업데이트
+					if (goldCnt * m >= cost(k)) {
+						maxGoldCnt = Math.max(goldCnt, maxGoldCnt);
+					}
+				}
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		// 입력
+		Scanner sc = new Scanner(System.in);
+		n = sc.nextInt();
+		m = sc.nextInt();
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				grid[i][j] = sc.nextInt();
+			}
+		}
+
+		simulate();
+
+		// 출력
+		System.out.println(maxGoldCnt);
+	}
+}
