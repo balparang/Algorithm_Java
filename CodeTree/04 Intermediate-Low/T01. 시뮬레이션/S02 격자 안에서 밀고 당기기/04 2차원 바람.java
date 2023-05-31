@@ -3,6 +3,8 @@
 	- 경계를 하나의 배열로 보고 밀며 나가는 형식
  */
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -119,6 +121,175 @@ public class Main {
 		for(int row = 1; row <= n; row++) {
 			for(int col = 1; col <= m; col++)
 				System.out.print(a[row][col] + " ");
+			System.out.println();
+		}
+	}
+}
+
+/*
+	23.05.30
+ */
+
+import java.util.Arrays;
+	import java.util.LinkedList;
+	import java.util.List;
+	import java.util.Scanner;
+
+	import org.w3c.dom.bootstrap.DOMImplementationRegistry;
+
+class Area {
+
+	int r1, c1, r2, c2;
+
+	public Area(int r1, int c1, int r2, int c2) {
+		this.r1 = r1;
+		this.c1 = c1;
+		this.r2 = r2;
+		this.c2 = c2;
+	}
+}
+
+public class Main {
+
+	static final int MAX_N = 100;
+	static final int DIR_NUM = 4;
+
+	static int[] dx = {0, 1, 0, -1};
+	static int[] dy = {1, 0, -1, 0};
+
+	static int n, m, q; // n by m grid, 바람 q회
+	static List<Area> areas = new LinkedList<>();
+	static int[][] grid = new int[MAX_N][MAX_N];
+	static int[][] copied = new int[MAX_N][MAX_N];
+
+	// copy source to target. target <- source
+	public static void copyArr(int[][] target, int[][] source) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				target[i][j] = source[i][j];
+			}
+		}
+	}
+
+	// inRange
+	public static boolean inRange(int x, int y) {
+		return x >= 0 && x < n && y >= 0 && y < m;
+	}
+
+	// calcAvg
+	public static void calcAvg(int r1, int c1, int r2, int c2) {
+		for (int row = r1; row <= r2; row++) {
+			for (int col = c1; col <= c2; col++) {
+
+				int sum = grid[row][col];
+				int cnt = 1;
+
+				for (int dir = 0; dir < DIR_NUM; dir++) {
+					int nx = row + dx[dir];
+					int ny = col + dy[dir];
+
+					if (inRange(nx, ny)) {
+						sum += grid[nx][ny];
+						cnt++;
+					}
+				}
+
+				// update avg to copied
+				copied[row][col] = sum / cnt;
+			}
+		}
+	}
+
+	// rotate
+	public static void rotate(int r1, int c1, int r2, int c2) {
+		int tmp = grid[r1][c1];
+
+		// left
+		for (int row = r1; row <= r2 - 1; row++) {
+			grid[row][c1] = grid[row + 1][c1];
+		}
+
+		// down
+		for (int col = c1; col <= c2 - 1; col++) {
+			grid[r2][col] = grid[r2][col + 1];
+		}
+
+		// right
+		for (int row = r2; row >= r1 + 1; row--) {
+			grid[row][c2] = grid[row - 1][c2];
+		}
+
+		// top
+		for (int col = c2; col >= c1 + 1; col--) {
+			grid[r1][col] = grid[r1][col - 1];
+		}
+
+		grid[r1][c1 + 1] = tmp;
+	}
+
+	// blow
+	public static void blow(int r1, int c1, int r2, int c2) {
+		// rotate
+		rotate(r1, c1, r2, c2);
+
+		// copy
+		copyArr(copied, grid);
+
+		// calcAvg
+		calcAvg(r1, c1, r2, c2);
+	}
+
+	// simulate()
+	public static void simulate() {
+
+		// q개의 바람을 분다.
+		for (Area area : areas) {
+			// r1, c1, r2, c2 를 area로 할 때 바람이 부는 경우
+			blow(area.r1, area.c1, area.r2, area.c2);
+
+			// grid를 blownGrid로 교체
+			copyArr(grid, copied);
+		}
+	}
+
+	public static void main(String[] args) {
+		// 입력
+
+		// n m q
+		// grid shape
+		// q개의 줄에 걸쳐 (r1, c1), (r2, c2)
+		Scanner sc = new Scanner(System.in);
+
+		n = sc.nextInt();
+		m = sc.nextInt();
+		q = sc.nextInt();
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				grid[i][j] = sc.nextInt();
+			}
+		}
+
+		for (int i = 0; i < q; i++) {
+			int r1 = sc.nextInt() - 1;
+			int c1 = sc.nextInt() - 1;
+			int r2 = sc.nextInt() - 1;
+			int c2 = sc.nextInt() - 1;
+
+			areas.add(new Area(r1, c1, r2, c2));
+		}
+
+		simulate();
+
+		// 출력
+		print(grid);
+	}
+
+	public static void print(int[][] arr) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				System.out.print(arr[i][j] + " ");
+			}
 			System.out.println();
 		}
 	}
